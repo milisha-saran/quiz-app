@@ -1,0 +1,24 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(89,83,89,1);
+-moz-box-shadow: 0px 2px 5px 0px rgba(89,83,89,1);
+box-shadow: 0px 2px 5px 0px rgba(89,83,89,1);
+}
+
+.question{
+    margin-left: 10px;
+    padding: 5px;
+    font-weight:500;
+    
+
+}
+
+.timer{
+    margin-right: 10px;
+    padding: 5px;
+    font-weight: 500;
+    
+
+}
