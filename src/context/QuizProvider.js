@@ -5,6 +5,9 @@ const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   const initialValue = {
     quiz1: {
+      numberOfQuestions: 20,
+      range: 10,
+      operators: ["+", "-", "*", "/"],
       questionNo: 1,
       userAnswers: [],
       score: 0,
@@ -12,6 +15,11 @@ export const QuizProvider = ({ children }) => {
   };
   const reducerFunc = (state, action) => {
     switch (action.type) {
+      case "SET_QUIZ_DATA":
+        return {
+          ...state,
+          quiz1: { ...state.quiz1, ...action.payload },
+        };
       case "SET_QUESTION_NO":
         return {
           ...state,

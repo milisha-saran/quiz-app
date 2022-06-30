@@ -1,30 +1,14 @@
 import { useEffect, useRef } from "react";
+import { useQuiz } from "../../context/QuizProvider";
 
 import styles from "./header.module.css";
 
-const Header = () => {
-  const timerID = useRef();
-
-  const reset = () => {
-    dispatch({ type: "COUNTDOWN", payload: state.quiz1.timer });
-    countdown();
-  };
-
-  const countdown = () => {
-    timerID.current = setInterval(() => {
-      dispatch({ type: "COUNTDOWN", payload: state.quiz1.countdown - 1 });
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (state.quiz1.countdown === 0) clearInterval(timerID.current);
-  }, [state.quiz1.countdown]);
-
+const Header = ({ time }) => {
+  const { state } = useQuiz();
   return (
     <div className={styles.header}>
       <p className={styles.question}>Question No. {state.quiz1.questionNo}</p>
-      {/* <button onClick={reset}>Next Question</button> */}
-      <p className={styles.timer}>Timer : {state.quiz1.countdown}</p>
+      <p className={styles.timer}>Timer : {time}</p>
     </div>
   );
 };

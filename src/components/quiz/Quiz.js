@@ -5,14 +5,17 @@ import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import styles from "./quiz.module.css";
 
-const Quiz = () => {
+const Quiz = ({ time, reset }) => {
   const { state, dispatch } = useQuiz();
 
   const [operation, setOperation] = useState({ question: "", answer: "" });
   const [useranswer, setUseranswer] = useState("");
 
   const changeQuestion = () => {
-    const { question, answer } = randomQuestionGenerator();
+    const { question, answer } = randomQuestionGenerator(
+      state.quiz1.range,
+      state.quiz1.operators
+    );
     setOperation({ question, answer });
   };
 
@@ -20,7 +23,9 @@ const Quiz = () => {
     setUseranswer(e.target.value);
   };
 
-  const checkAnswer = () => {
+  const submitAnswer = () => {
+    if (state.quiz1.questionNo === state.quiz1.numberOfQuestions) return;
+
     const payload = {
       questionNo: state.quiz1.questionNo,
       answer: useranswer,
@@ -43,15 +48,21 @@ const Quiz = () => {
     changeQuestion();
 
     setUseranswer("");
+
+    reset();
   };
 
   useEffect(() => {
     changeQuestion();
   }, []);
 
+  useEffect(() => {
+    if (time === 0) submitAnswer();
+  }, [time]);
+
   return (
     <div>
-      <Header />
+      <Header time={time} />
 
       <div className={styles.container}>
         <div className={styles.arithmetic}>
@@ -65,8 +76,10 @@ const Quiz = () => {
             value={useranswer}
             onChange={acceptAnswer}
           />
-          <button className={styles.answerbutton} onClick={checkAnswer}>
-            Submit
+          <button className={styles.answerbutton} onClick={submitAnswer}>
+            {state.quiz1.questionNo === state.quiz1.numberOfQuestions
+              ? "Finish"
+              : "Submit"}
           </button>
         </div>
         {/* <button className={styles.startbutton} >Start Quiz</button> */}
