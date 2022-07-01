@@ -3,26 +3,28 @@ import { createContext, useContext, useReducer } from "react";
 const QuizContext = createContext();
 
 export const QuizProvider = ({ children }) => {
+  const defaultQuizval = {
+    numberOfQuestions: 20,
+    range: 10,
+    operators: ["+", "-", "*", "/"],
+    questionNo: 1,
+    userAnswers: [],
+    score: 0,
+  };
   const initialValue = {
-    quiz1: {
-      numberOfQuestions: 20,
-      range: 10,
-      operators: ["+", "-", "*", "/"],
-      questionNo: 1,
-      userAnswers: [],
-      score: 0,
-    },
-    quiz2: {
-      numberOfQuestions: 20,
-      range: 10,
-      operators: ["+", "-", "*", "/"],
-      questionNo: 1,
-      userAnswers: [],
-      score: 0,
-    },
+    quiz1: defaultQuizval,
+    quiz2: defaultQuizval,
   };
   const reducerFunc = (state, action) => {
     switch (action.type) {
+      case "RESET_QUIZ": {
+        const quizNo = action.payload;
+        return {
+          ...state,
+          [quizNo]: defaultQuizval,
+        };
+      }
+
       case "SET_QUIZ_DATA": {
         const { quizNo, quizData } = action.payload;
         return {

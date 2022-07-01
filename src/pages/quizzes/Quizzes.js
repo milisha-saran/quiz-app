@@ -17,7 +17,12 @@ const Quizzes = () => {
       <div className={styles.quizzes}>
         <div className={styles.quiz}>
           {isQuiz1Started ? (
-            <Quiz time={time1} reset={reset1} quizNo={"quiz1"} />
+            <Quiz
+              time={time1}
+              reset={reset1}
+              quizNo={"quiz1"}
+              setQuizStarted={setQuiz1Started}
+            />
           ) : (
             <QuizCard
               setQuizStarted={setQuiz1Started}
@@ -29,7 +34,12 @@ const Quizzes = () => {
 
         <div className={styles.quiz}>
           {isQuiz2Started ? (
-            <Quiz time={time2} reset={reset2} quizNo={"quiz2"} />
+            <Quiz
+              time={time2}
+              reset={reset2}
+              quizNo={"quiz2"}
+              setQuizStarted={setQuiz2Started}
+            />
           ) : (
             <QuizCard
               setQuizStarted={setQuiz2Started}

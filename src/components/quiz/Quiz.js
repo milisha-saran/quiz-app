@@ -6,7 +6,7 @@ import Header from "../header/Header";
 import Result from "../result/Result";
 import styles from "./quiz.module.css";
 
-const Quiz = ({ time, reset, quizNo }) => {
+const Quiz = ({ time, reset, quizNo, setQuizStarted }) => {
   const { state, dispatch } = useQuiz();
 
   const [operation, setOperation] = useState({ question: "", answer: "" });
@@ -72,6 +72,14 @@ const Quiz = ({ time, reset, quizNo }) => {
     reset();
   };
 
+  const resetQuiz = () => {
+    setQuizStarted(false);
+    dispatch({
+      type: "RESET_QUIZ",
+      payload: quizNo,
+    });
+  };
+
   useEffect(() => {
     changeQuestion();
   }, []);
@@ -102,7 +110,7 @@ const Quiz = ({ time, reset, quizNo }) => {
               </button>
             </div>
           </div>
-          <Footer quizNo={quizNo} />{" "}
+          <Footer quizNo={quizNo} resetQuiz={resetQuiz} />{" "}
         </>
       ) : (
         <Result quizNo={quizNo} />
