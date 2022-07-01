@@ -1,3 +1,4 @@
+import Result from "./components/result/Result";
 import Quizzes from "./pages/quizzes/Quizzes";
 
 function App() {

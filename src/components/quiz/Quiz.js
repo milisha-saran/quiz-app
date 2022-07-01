@@ -3,6 +3,7 @@ import { useQuiz } from "../../context/QuizProvider";
 import { randomQuestionGenerator } from "../../helpers/randomQuestionGenerator";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
+import Result from "../result/Result";
 import styles from "./quiz.module.css";
 
 const Quiz = ({ time, reset }) => {
@@ -10,6 +11,10 @@ const Quiz = ({ time, reset }) => {
 
   const [operation, setOperation] = useState({ question: "", answer: "" });
   const [useranswer, setUseranswer] = useState("");
+  const [isFinished, setFinished] = useState(false);
+
+  const isLastQuestion =
+    Number(state.quiz1.questionNo) === Number(state.quiz1.numberOfQuestions);
 
   const changeQuestion = () => {
     const { question, answer } = randomQuestionGenerator(
@@ -24,11 +29,11 @@ const Quiz = ({ time, reset }) => {
   };
 
   const submitAnswer = () => {
-    if (state.quiz1.questionNo === state.quiz1.numberOfQuestions) return;
-
     const payload = {
       questionNo: state.quiz1.questionNo,
-      answer: useranswer,
+      question: operation.question,
+      useranswer: useranswer,
+      answer: operation.answer,
       isCorrect: false,
       isWrong: false,
       isUnattemped: false,
@@ -43,11 +48,13 @@ const Quiz = ({ time, reset }) => {
     }
     dispatch({ type: "SET_ANSWER", payload });
 
+    setUseranswer("");
+
+    if (isLastQuestion) return setFinished(true);
+
     dispatch({ type: "SET_QUESTION_NO", payload: state.quiz1.questionNo + 1 });
 
     changeQuestion();
-
-    setUseranswer("");
 
     reset();
   };
@@ -62,29 +69,31 @@ const Quiz = ({ time, reset }) => {
 
   return (
     <div>
-      <Header time={time} />
+      {!isFinished ? (
+        <>
+          <Header time={time} />
+          <div className={styles.container}>
+            <div className={styles.arithmetic}>
+              <p className={styles.question}>
+                What is the value of {operation.question}?
+              </p>
 
-      <div className={styles.container}>
-        <div className={styles.arithmetic}>
-          <p className={styles.question}>
-            What is the value of {operation.question}?
-          </p>
-
-          <input
-            className={styles.answer}
-            type="number"
-            value={useranswer}
-            onChange={acceptAnswer}
-          />
-          <button className={styles.answerbutton} onClick={submitAnswer}>
-            {state.quiz1.questionNo === state.quiz1.numberOfQuestions
-              ? "Finish"
-              : "Submit"}
-          </button>
-        </div>
-        {/* <button className={styles.startbutton} >Start Quiz</button> */}
-      </div>
-      <Footer />
+              <input
+                className={styles.answer}
+                type="number"
+                value={useranswer}
+                onChange={acceptAnswer}
+              />
+              <button className={styles.answerbutton} onClick={submitAnswer}>
+                {isLastQuestion ? "Finish" : "Submit"}
+              </button>
+            </div>
+          </div>
+          <Footer />{" "}
+        </>
+      ) : (
+        <Result />
+      )}
     </div>
   );
 };

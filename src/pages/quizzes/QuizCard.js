@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuiz } from "../../context/QuizProvider";
+import styles from "../quizzes/quizcard.module.css";
 
 const QuizCard = ({ setQuizStarted, reset }) => {
   const { dispatch } = useQuiz();
@@ -33,65 +34,87 @@ const QuizCard = ({ setQuizStarted, reset }) => {
   };
 
   return (
-    <div>
-      <span>
-        <label htmlFor="questions">Enter Number of Questions</label>
+    <div className={styles.quizcard}>
+      <div className={styles.quizelement}>
+        <label className={styles.inputinfo} htmlFor="questions">
+          Enter Number of Questions:
+        </label>
+        <br />
         <input
+          className={styles.userinput}
           id="questions"
           type="number"
           value={questions}
           onChange={handleQuestions}
         />
-      </span>
-
-      <span>
-        <label htmlFor="range">Enter the range</label>
-        <input id="range" type="number" value={range} onChange={handleRange} />
-      </span>
-      <div>
-        <span>
-          <label htmlFor="plus">+</label>
-          <input
-            id="plus"
-            type="checkbox"
-            value="+"
-            checked={operators.includes("+")}
-            onChange={handleOperators}
-          />
-        </span>
-        <span>
-          <label htmlFor="minus">-</label>
-          <input
-            id="minus"
-            type="checkbox"
-            value="-"
-            checked={operators.includes("-")}
-            onChange={handleOperators}
-          />
-        </span>
-        <span>
-          <label htmlFor="multiply">*</label>
-          <input
-            id="multiply"
-            type="checkbox"
-            value="*"
-            checked={operators.includes("*")}
-            onChange={handleOperators}
-          />
-        </span>
-        <span>
-          <label htmlFor="divide">/</label>
-          <input
-            id="divide"
-            type="checkbox"
-            value="/"
-            checked={operators.includes("/")}
-            onChange={handleOperators}
-          />
-        </span>
       </div>
 
-      <button onClick={submitData}>Start Quiz</button>
+      <div className={styles.quizelement}>
+        <label className={styles.inputinfo} htmlFor="range">
+          Enter The Range:
+        </label>
+        <input
+          className={styles.inputinfo}
+          id="range"
+          type="number"
+          value={range}
+          onChange={handleRange}
+        />
+      </div>
+
+      <div className={styles.quizelement}>
+        <label className={styles.inputinfo} htmlFor="range">
+          Choose Your Operators:
+        </label>
+        <div className={styles.inlineoperators}>
+          <div className={styles.operator}>
+            <label htmlFor="plus">Add(+)</label>
+            <input
+              id="plus"
+              type="checkbox"
+              value="+"
+              checked={operators.includes("+")}
+              onChange={handleOperators}
+            />
+          </div>
+          <div className={styles.operator}>
+            <label htmlFor="minus">Subtract(-)</label>
+            <input
+              id="minus"
+              type="checkbox"
+              value="-"
+              checked={operators.includes("-")}
+              onChange={handleOperators}
+            />
+          </div>
+        </div>
+        <div className={styles.inlineoperators}>
+          <div className={styles.operator}>
+            <label htmlFor="multiply">Multiply(*)</label>
+            <input
+              id="multiply"
+              type="checkbox"
+              value="*"
+              checked={operators.includes("*")}
+              onChange={handleOperators}
+            />
+          </div>
+          <div className={styles.operator}>
+            <label htmlFor="divide">Divide (/)</label>
+            <input
+              id="divide"
+              type="checkbox"
+              value="/"
+              checked={operators.includes("/")}
+              onChange={handleOperators}
+            />
+          </div>
+        </div>
+      </div>
+
+      <button className={styles.startbutton} onClick={submitData}>
+        Start Quiz
+      </button>
     </div>
   );
 };

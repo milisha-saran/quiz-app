@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 
 const useTimer = () => {
   const [time, setTime] = useState(20);
-  const timerID = useRef();
+  const timerID = useRef(null);
 
   const reset = () => {
     setTime(20);
+    clearInterval(timerID.current);
     countdown();
   };
 

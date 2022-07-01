@@ -1,0 +1,60 @@
+.quizcard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+.quizelement{
+    display: flex;
+    padding: 5px;
+    margin-bottom: 1px; 
+    width: 500px;
+}
+
+.inputinfo{
+        text-align: left;
+        font-size: medium;
+        font-weight: 500;
+        margin-bottom: 10px;
+        width: 250px;  
+}
+
+.userinput{
+    width: 250px;
+    height: 20px;
+}
+.inlineoperators{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 130px;
+}
+
+.operator{
+    display: flex;
+    justify-content: space-between;
+    font-size:small;
+    font-weight: 400;
+}
+
+.startbutton{
+    margin-top: 20px;
+    width: 200px;
+    height: 40px;
+   font-size: medium;
+    background-color: rgb(60, 161, 250);
+    border-radius: 5px;
+    font-weight: 400;
+    border: 0px;
+    color: black
+    
+}
+
+.startbutton:hover{
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,1);
+    box-shadow: 1px 1px 5px 0px rgba(0,0,0,1);
+}
