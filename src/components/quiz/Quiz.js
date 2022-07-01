@@ -6,7 +6,7 @@ import Header from "../header/Header";
 import Result from "../result/Result";
 import styles from "./quiz.module.css";
 
-const Quiz = ({ time, reset }) => {
+const Quiz = ({ time, reset, quizNo }) => {
   const { state, dispatch } = useQuiz();
 
   const [operation, setOperation] = useState({ question: "", answer: "" });
@@ -14,12 +14,13 @@ const Quiz = ({ time, reset }) => {
   const [isFinished, setFinished] = useState(false);
 
   const isLastQuestion =
-    Number(state.quiz1.questionNo) === Number(state.quiz1.numberOfQuestions);
+    Number(state[quizNo].questionNo) ===
+    Number(state[quizNo].numberOfQuestions);
 
   const changeQuestion = () => {
     const { question, answer } = randomQuestionGenerator(
-      state.quiz1.range,
-      state.quiz1.operators
+      state[quizNo].range,
+      state[quizNo].operators
     );
     setOperation({ question, answer });
   };
@@ -30,7 +31,7 @@ const Quiz = ({ time, reset }) => {
 
   const submitAnswer = () => {
     const payload = {
-      questionNo: state.quiz1.questionNo,
+      questionNo: state[quizNo].questionNo,
       question: operation.question,
       useranswer: useranswer,
       answer: operation.answer,
@@ -40,19 +41,28 @@ const Quiz = ({ time, reset }) => {
     };
     if (Number(operation.answer) === Number(useranswer)) {
       payload.isCorrect = true;
-      dispatch({ type: "SET_SCORE", payload: state.quiz1.score + 1 });
+      dispatch({ type: "SET_SCORE", payload: state[quizNo].score + 1 });
     } else if (useranswer === "") {
       payload.isUnattemped = true;
     } else {
       payload.isWrong = true;
     }
-    dispatch({ type: "SET_ANSWER", payload });
+    dispatch({
+      type: "SET_ANSWER",
+      payload: {
+        quizNo,
+        userAnswer: payload,
+      },
+    });
 
     setUseranswer("");
 
     if (isLastQuestion) return setFinished(true);
 
-    dispatch({ type: "SET_QUESTION_NO", payload: state.quiz1.questionNo + 1 });
+    dispatch({
+      type: "SET_QUESTION_NO",
+      payload: { quizNo, questionNo: state[quizNo].questionNo + 1 },
+    });
 
     changeQuestion();
 
@@ -71,7 +81,7 @@ const Quiz = ({ time, reset }) => {
     <div>
       {!isFinished ? (
         <>
-          <Header time={time} />
+          <Header quizNo={quizNo} time={time} />
           <div className={styles.container}>
             <div className={styles.arithmetic}>
               <p className={styles.question}>
@@ -92,7 +102,7 @@ const Quiz = ({ time, reset }) => {
           <Footer />{" "}
         </>
       ) : (
-        <Result />
+        <Result quizNo={quizNo} />
       )}
     </div>
   );

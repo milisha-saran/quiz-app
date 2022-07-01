@@ -12,30 +12,46 @@ export const QuizProvider = ({ children }) => {
       userAnswers: [],
       score: 0,
     },
+    quiz2: {
+      numberOfQuestions: 20,
+      range: 10,
+      operators: ["+", "-", "*", "/"],
+      questionNo: 1,
+      userAnswers: [],
+      score: 0,
+    },
   };
   const reducerFunc = (state, action) => {
     switch (action.type) {
-      case "SET_QUIZ_DATA":
+      case "SET_QUIZ_DATA": {
+        const { quizNo, quizData } = action.payload;
         return {
           ...state,
-          quiz1: { ...state.quiz1, ...action.payload },
+          [quizNo]: { ...state[quizNo], ...quizData },
         };
-      case "SET_QUESTION_NO":
+      }
+      case "SET_QUESTION_NO": {
+        const { quizNo, questionNo } = action.payload;
         return {
           ...state,
-          quiz1: { ...state.quiz1, questionNo: action.payload },
+          [quizNo]: { ...state[quizNo], questionNo: questionNo },
         };
+      }
 
-      case "SET_ANSWER":
+      case "SET_ANSWER": {
+        const { quizNo, userAnswer } = action.payload;
         return {
           ...state,
-          quiz1: {
-            ...state.quiz1,
-            userAnswers: [...state.quiz1.userAnswers, action.payload],
+          [quizNo]: {
+            ...state[quizNo],
+            userAnswers: [...state[quizNo].userAnswers, userAnswer],
           },
         };
-      case "SET_SCORE":
-        return { ...state, quiz1: { ...state.quiz1, score: action.payload } };
+      }
+      case "SET_SCORE": {
+        const { quizNo, score } = action.payload;
+        return { ...state, [quizNo]: { ...state[quizNo], score } };
+      }
 
       default:
         return state;

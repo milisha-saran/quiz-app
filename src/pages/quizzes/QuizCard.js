@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuiz } from "../../context/QuizProvider";
 import styles from "../quizzes/quizcard.module.css";
 
-const QuizCard = ({ setQuizStarted, reset }) => {
+const QuizCard = ({ setQuizStarted, reset, quizNo }) => {
   const { dispatch } = useQuiz();
 
   const [questions, setQuestions] = useState(20);
@@ -24,9 +24,12 @@ const QuizCard = ({ setQuizStarted, reset }) => {
     dispatch({
       type: "SET_QUIZ_DATA",
       payload: {
-        numberOfQuestions: questions,
-        range,
-        operators: operators.length > 0 ? operators : ["+", "-", "*", "/"],
+        quizNo,
+        quizData: {
+          numberOfQuestions: questions,
+          range,
+          operators: operators.length > 0 ? operators : ["+", "-", "*", "/"],
+        },
       },
     });
     setQuizStarted(true);

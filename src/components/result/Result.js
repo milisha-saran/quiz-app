@@ -2,11 +2,11 @@ import React from "react";
 import { useQuiz } from "../../context/QuizProvider";
 import styles from "./result.module.css";
 
-const Result = () => {
+const Result = ({ quizNo }) => {
   const { state } = useQuiz();
   return (
     <div>
-      {state.quiz1.userAnswers.map(
+      {state[quizNo].userAnswers.map(
         ({
           questionNo,
           question,

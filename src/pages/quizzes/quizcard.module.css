@@ -1,3 +1,13 @@
+.quizzes{
+    display:flex;
+    justify-content: space-around;
+}
+
+.quiz{
+    width: 100%;
+    border: solid 1px #000;
+}
+
 .quizcard{
     display: flex;
     flex-direction: column;

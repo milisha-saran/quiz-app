@@ -20,7 +20,7 @@ const useTimer = () => {
     if (time === 0) clearInterval(timerID.current);
   }, [time]);
 
-  return [time, reset];
+  return { time, reset };
 };
 
 export default useTimer;
