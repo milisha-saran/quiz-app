@@ -41,7 +41,10 @@ const Quiz = ({ time, reset, quizNo }) => {
     };
     if (Number(operation.answer) === Number(useranswer)) {
       payload.isCorrect = true;
-      dispatch({ type: "SET_SCORE", payload: state[quizNo].score + 1 });
+      dispatch({
+        type: "SET_SCORE",
+        payload: { quizNo, score: state[quizNo].score + 1 },
+      });
     } else if (useranswer === "") {
       payload.isUnattemped = true;
     } else {
@@ -99,7 +102,7 @@ const Quiz = ({ time, reset, quizNo }) => {
               </button>
             </div>
           </div>
-          <Footer />{" "}
+          <Footer quizNo={quizNo} />{" "}
         </>
       ) : (
         <Result quizNo={quizNo} />
